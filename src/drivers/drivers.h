@@ -48,6 +48,7 @@ void PollAtkSerial(PollContext& ctx); // ATK N9 Pro headset (virtual COM port)
 void PollKeychron(PollContext& ctx);  // Keychron mice
 void PollLamzu(PollContext& ctx);     // LAMZU mice on vendor ids 373E / 37B0
 void PollRongyuan(PollContext& ctx);  // Rongyuan receivers (Attack Shark, Ajazz keyboards, ...)
+void PollWooking(PollContext& ctx);   // Wooking PM25, receiver 1EA7:0064 (FFB5/B5 protocol)
 void PollSonyInzone(PollContext& ctx);  // Sony INZONE H9 II / H5
 void PollRog(PollContext& ctx);       // ASUS ROG keyboards and mice
 void PollZowie(PollContext& ctx);     // BenQ ZOWIE EC-CW / DW mice

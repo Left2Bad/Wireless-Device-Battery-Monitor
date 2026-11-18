@@ -8,6 +8,12 @@
 #include <roapi.h>
 #include <winstring.h>
 #include <xinput.h>
+// Some MinGW headers generate both IReference<BYTE> and IReference<boolean>,
+// even though boolean is a BYTE typedef. Skip the unused boolean specialization
+// to avoid a duplicate definition (this driver only reads IReference<INT32>).
+#if defined(__MINGW32__) && !defined(____FIReference_1_boolean_INTERFACE_DEFINED__)
+#define ____FIReference_1_boolean_INTERFACE_DEFINED__
+#endif
 #include <windows.system.power.h>
 // MinGW's windows.devices.power.h names BatteryStatus without its namespace; make it visible there.
 namespace ABI { namespace Windows { namespace Devices { namespace Power {

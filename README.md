@@ -1,10 +1,16 @@
-# Wireless Battery
+# Wireless Battery — Wooking PM25 fork
+
+Unofficial fork of [krisgfx9/Wireless-Device-Battery-Monitor](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor), based on [v1.0.4](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/releases/tag/v1.0.4). The original project and GPL-3.0 license are preserved. This fork's default branch is `wooking-pm25`; `main` retains the upstream history.
+
+**Added Wooking PM25 support:** tested with the owner's `1EA7:0064` 2.4 GHz receiver (`FFB5` vendor HID). The mouse returned 56% during testing. This is the firmware-reported value; accuracy through a discharge cycle has not been verified. Voltage and charging state are not decoded. See [PM25 protocol and limitations](docs/wooking-pm25.md).
+
+**Скачать сборку для PM25:** откройте [релиз PM25](https://github.com/Left2Bad/Wireless-Device-Battery-Monitor/releases/tag/pm25-v1.0.4.1), распакуйте portable ZIP и запустите `WirelessBattery.exe`. Установка не нужна. Если исходная программа уже работает, сначала закройте её.
 
 Battery levels of your wireless mouse, headset, keyboard and controller, right on the Windows taskbar.
 
 ![Wireless Battery on the taskbar](docs/screenshot.png)
 
-> **Just want it working?** Download **[WirelessBattery-Setup](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/releases/latest)** from the latest release, run it and click through. That's it.
+> **PM25 download:** grab the portable ZIP from [this fork's PM25 release](https://github.com/Left2Bad/Wireless-Device-Battery-Monitor/releases/tag/pm25-v1.0.4.1), extract it and run `WirelessBattery.exe`. This fork release is portable; the original project's installer does not include this change.
 >
 > **Experienced users** can grab the portable zip, use the [command-line options](#command-line), or [build it from source](#build) with `make` or `build.bat`.
 
@@ -28,6 +34,7 @@ Hover for details. Click for the menu: every device (click one to hide or show i
 
 | Vendor | Devices | How |
 |---|---|---|
+| **Wooking** | PM25 via tested `1EA7:0064` 2.4 GHz receiver | Vendor HID `FFB5:0001`, status request `B5 01`; firmware percentage only. [Protocol and limitations](docs/wooking-pm25.md) |
 | **Logitech** | Mice and keyboards on Unifying, Bolt, Lightspeed and Nano receivers, over USB or Bluetooth; G headsets (G533, G535, G633/G635/G733/G933/G935, G PRO/PRO X) | HID++ 1.0 / 2.0 with feature discovery: unified battery, battery level, voltage, ADC |
 | **Razer** | Wireless mice, keyboards and dongles; BlackShark V3 / V3 Pro headsets | Razer feature-report protocol; headset envelope protocol (queried every 5 min) |
 | **SteelSeries** | Arctis 1/7/7+/9/Pro/Pro Wireless, Arctis Nova 3P/5/7/7X/7P/Pro Wireless, GameBuds; Aerox 3/5/9 Wireless, Prime Wireless, Rival 3 Wireless (Gen 2), Rival 650, Rival Pro | Vendor HID reports |
@@ -54,20 +61,17 @@ Hover for details. Click for the menu: every device (click one to hide or show i
 | **Generic HID** | Devices reporting the standard HID *Battery Strength* usage | HID usage page 0x06 / 0x85 |
 | **HeadsetControl** | [Every headset it supports](https://github.com/Sapd/HeadsetControl#supported-headsets) (Audeze, Jabra, Sony INZONE, newer Logitech and more) | Bundled; runs `headsetcontrol -o json` |
 
-**Tested on real hardware:** Glorious Model O Wireless, HyperX Cloud III Wireless, Cooler Master MM712 (dongle) and Rapoo VT3 Max Gen 2 (receiver `24AE:1417` and USB cable `24AE:4617`; other Rapoo models are untested, see [Rapoo protocol notes](docs/rapoo.md)).
+**Tested on real hardware in this fork:** Wooking PM25, receiver `1EA7:0064`; status query and firmware percentage verified, discharge accuracy unverified.
+**Reported as tested by the upstream project:** Glorious Model O Wireless, HyperX Cloud III Wireless, Cooler Master MM712 (dongle) and Rapoo VT3 Max Gen 2 (receiver `24AE:1417` and USB cable `24AE:4617`; other Rapoo models are untested, see [Rapoo protocol notes](docs/rapoo.md)).
 **Implemented from protocol documentation and other projects, not yet tested:** everything else. If you own one of these devices, please report whether it works by [opening an issue](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/issues).
 
 ## Install
 
-[![Latest version](https://img.shields.io/github/v/release/krisgfx9/Wireless-Device-Battery-Monitor?label=latest%20version&style=for-the-badge)](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/releases/latest)
+1. Download `Wooking-PM25-portable.zip` from [the PM25 release](https://github.com/Left2Bad/Wireless-Device-Battery-Monitor/releases/tag/pm25-v1.0.4.1).
+2. Extract the whole archive into a folder. Close any older Wireless Battery instance.
+3. Run `WirelessBattery.exe` with the PM25 receiver connected and the mouse awake in 2.4 GHz mode.
 
-1. Download **`WirelessBattery-Setup-<version>.exe`** from the [latest release](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/releases/latest).
-2. Run it and click through. It needs **no administrator rights** and **nothing else installed**: no
-   runtimes, no drivers, no vendor apps. HeadsetControl comes bundled.
-
-The installer adds a Start menu entry and an uninstaller (*Settings → Apps*), and can start the app
-when you sign in. Prefer no installer? Download `WirelessBattery-<version>-portable.zip`, unzip it
-anywhere and run `WirelessBattery.exe`.
+This release is a portable Windows x64 build, with corresponding source and license included. It does not bundle HeadsetControl or an installer. The [original project's releases](https://github.com/krisgfx9/Wireless-Device-Battery-Monitor/releases) provide its own installers and supported-device updates, but do not include this fork's PM25 change.
 
 **Notes:**
 - **SmartScreen warning:** the exe is not code-signed, so Windows may say "Windows protected your PC". Click *More info → Run anyway*, or build it yourself.

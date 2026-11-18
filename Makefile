@@ -29,5 +29,7 @@ test:
 	./build/rapoo_protocol_test.exe
 	$(CXX) $(CXXFLAGS) tests/rapoo_driver_test.cpp src/drivers/rapoo.cpp -o build/rapoo_driver_test.exe
 	./build/rapoo_driver_test.exe
+	$(CXX) $(CXXFLAGS) tests/wooking_driver_test.cpp src/drivers/wooking.cpp -o build/wooking_driver_test.exe
+	./build/wooking_driver_test.exe
 
 .PHONY: clean test
